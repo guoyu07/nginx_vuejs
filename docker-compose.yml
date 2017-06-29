@@ -1,0 +1,24 @@
+version: "2"
+
+volumes:
+    node_modules:
+    public:
+
+services:
+  nginx:
+    build: dockers/nginx
+    volumes_from:
+      - node
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - node
+  node:
+    build: dockers/node
+    volumes:
+        - ./app:/usr/src/app
+        - node_modules:/usr/src/app/frontend/node_modules
+        - node_modules:/usr/src/app/backend/node_modules
+        - public:/usr/src/app/backend/public
+    command: sh -c "chmod +x /usr/src/app/build.sh && /usr/src/app/build.sh"

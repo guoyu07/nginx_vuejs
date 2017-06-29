@@ -1,0 +1,3 @@
+FROM node:8.0.0
+
+EXPOSE 9000
